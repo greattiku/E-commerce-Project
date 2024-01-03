@@ -1,0 +1,119 @@
+
+https://github.com/greattiku/E-commerce-Project.git
+
+
+    @PostMapping(value = {"/add-Product"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public AppResponse<String> addProduct(@RequestPart ("productRequest") ProductRequest productRequest,
+                                          @RequestPart("imageFile")MultipartFile[] file){
+        return productService.addProduct(productRequest);
+        try{
+            Set<ImageModel>  images = uploadImage(file);
+            productRequest.setProductImages(images);
+          return   productService.addProduct(productRequest);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+    }
+
+    public Set<ImageModel> uploadImage(MultipartFile[] multipartFiles) throws IOException {
+        Set<ImageModel> imageModels = new HashSet<>();//part of controller too
+
+        for (MultipartFile file: multipartFiles){
+            ImageModel imageModel = new ImageModel(
+                    file.getOriginalFilename(),
+                    file.getContentType(),
+                    file.getBytes()
+            );
+            imageModels.add(imageModel);
+        }
+
+        return imageModels;
+    }// to this place
+
+
+
+@Getter
+@Entity
+@Table(name = "image_model")
+public class ImageModel {
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;
+private String name;
+private String type;
+@Column(length = 50000000)
+private byte[] picByte;
+
+public ImageModel(){
+
+}
+
+public ImageModel(String name, String type, byte[] picByte) {
+this.name = name;
+this.type = type;
+this.picByte = picByte;
+}
+
+public void setId(Long id) {
+this.id = id;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+public void setType(String type) {
+this.type = type;
+}
+
+public void setPicByte(byte[] picByte) {
+this.picByte = picByte;
+}
+}
+
+
+
+    create database e_commerce
+
+        alter table product
+        add column size varchar
+
+        alter table product alter column size set data type varchar
+        alter column set data type varchar
+        set data type varchar
+
+        alter table product
+        drop column size
+
+        alter table product
+        rename column from users to duties
+
+        select * from product p
+        select * from category c
+        select * from category_product cp
+        select * from category_product_list cpl
+        select * from product_category pc
+        select * from ca
+
+            select * from product p
+                    select * from "cart-item" ci
+                    select * from users u
+                    select * from shopping_cart sc
+                    select from cart_item ci
+
+                    alter table shopping_cart
+                    drop column quantity
+
+                    alter table users
+                    drop table cart_item
+
+                    alter table users
+                    add column user_name varchar
+                    alter table order_detail  RENAME column  fullOrder to fullAddress
+
+                    alter table shopping_cart
+                    alter column user_email  type varchar(255)
+
+                     alter table users alter column phone_number set data type varchar
